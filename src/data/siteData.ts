@@ -9,7 +9,7 @@ export const team = [
     position: 'Генеральный директор, основатель',
     bio: 'В юриспруденции с 1999 года. Имеет большой опыт работы в различных отраслях. Основал компанию в 2007 году.',
     experience: 'Юридический стаж — 20 лет',
-    image: 'https://image.qwenlm.ai/generated-images/53ccfad3-c1c0-4869-9567-8164d3accba3/_result.png',
+    image: 'http://xn--80aeahfbug6bhlsn.xn--p1ai/images/gallery/new/th/jurist-ivanov-igor.jpg',
   },
   {
     name: 'Екатерина Владимировна Филиппова',
