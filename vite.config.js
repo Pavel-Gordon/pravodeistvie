@@ -4,7 +4,8 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: '/pravodeistvie/',  // ← ДОБАВЛЕНО для GitHub Pages
+  // Required for GitHub Pages project site: https://pavel-gordon.github.io/pravodeistvie/
+  base: '/pravodeistvie/',
   server: {
     host: "0.0.0.0",
     port: 3000,

@@ -1,0 +1,13 @@
+node_modules/
+dist/
+build/
+.next/
+*.log
+
+# OS noise
+.DS_Store
+
+# Editor / Vite cache
+.vite/
+.idea/
+.vscode/
