@@ -3,7 +3,7 @@ import { ArrowRight } from 'lucide-react';
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
+    <section className="relative min-h-[100svh] flex items-center overflow-hidden">
       {/* CSS-градиент фон */}
       <div className="absolute inset-0 z-0">
         {/* Базовый градиент */}
@@ -42,13 +42,11 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="font-['Playfair_Display'] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-8"
+            className="font-['Playfair_Display'] text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-8 text-balance"
           >
-            Защищаем ваши
-            <br />
-            <span className="text-[#C5A059]">интересы</span> на высшем
-            <br />
-            уровне
+            Защищаем ваши{' '}
+            <span className="text-[#C5A059] whitespace-nowrap">интересы</span>{' '}
+            на высшем уровне
           </motion.h1>
 
           <motion.p

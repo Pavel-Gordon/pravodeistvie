@@ -29,6 +29,11 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
+        env:
+          # Значения берутся из GitHub Secrets: Settings → Secrets and variables → Actions
+          VITE_FORMSPREE_ENDPOINT: ${{ secrets.VITE_FORMSPREE_ENDPOINT }}
+          VITE_TELEGRAM_BOT_TOKEN: ${{ secrets.VITE_TELEGRAM_BOT_TOKEN }}
+          VITE_TELEGRAM_CHAT_ID: ${{ secrets.VITE_TELEGRAM_CHAT_ID }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

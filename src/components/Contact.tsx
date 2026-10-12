@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useState } from 'react';
+import { sendLead } from '../lib/sendForm';
 
 const formSchema = z.object({
   name: z.string().min(2, 'Введите ваше имя'),
@@ -18,7 +19,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export default function Contact() {
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'error'>('idle');
 
   const {
     register,
@@ -29,13 +30,21 @@ export default function Contact() {
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit = (data: FormData) => {
-    console.log('Form data:', data);
-    setIsSubmitted(true);
-    setTimeout(() => {
+  const onSubmit = async (data: FormData) => {
+    setStatus('sending');
+    try {
+      await sendLead({
+        name: data.name,
+        phone: data.phone,
+        email: data.email || undefined,
+        message: data.message,
+      });
       reset();
-      setIsSubmitted(false);
-    }, 3000);
+      setStatus('ok');
+    } catch (error) {
+      console.error('Не удалось отправить заявку:', error);
+      setStatus('error');
+    }
   };
   const offices = [
     {
@@ -269,8 +278,8 @@ export default function Contact() {
             </p>
           </div>
 
-          <div className="max-w-3xl mx-auto bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 p-8 lg:p-10">
-            {isSubmitted ? (
+          <div className="max-w-3xl mx-auto bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 p-5 sm:p-8 lg:p-10">
+            {status === 'ok' ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -287,93 +296,120 @@ export default function Contact() {
                 </p>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-white/90 font-['Inter'] text-sm mb-2 drop-shadow">
+                    <label htmlFor="lead-name" className="block text-white/90 font-['Inter'] text-sm mb-2 drop-shadow">
                       Ваше имя *
                     </label>
                     <input
+                      id="lead-name"
+                      autoComplete="name"
+                      aria-invalid={!!errors.name}
                       {...register('name')}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded text-white font-['Inter'] focus:outline-none focus:border-[#C5A059] transition-colors placeholder:text-white/30"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded text-white font-['Inter'] focus:outline-none focus:border-[#C5A059] focus-visible:ring-2 focus-visible:ring-[#C5A059]/60 transition-colors placeholder:text-white/30"
                       placeholder="Иван Иванов"
                     />
                     {errors.name && (
-                      <p className="text-red-400 text-xs mt-1 font-['Inter']">{errors.name.message}</p>
+                      <p role="alert" className="text-red-400 text-xs mt-1 font-['Inter']">{errors.name.message}</p>
                     )}
                   </div>
                   <div>
-                    <label className="block text-white/90 font-['Inter'] text-sm mb-2 drop-shadow">
+                    <label htmlFor="lead-phone" className="block text-white/90 font-['Inter'] text-sm mb-2 drop-shadow">
                       Телефон *
                     </label>
                     <input
-                      {...register('phone')}
+                      id="lead-phone"
                       type="tel"
-                      className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded text-white font-['Inter'] focus:outline-none focus:border-[#C5A059] transition-colors placeholder:text-white/30"
+                      inputMode="tel"
+                      autoComplete="tel"
+                      aria-invalid={!!errors.phone}
+                      {...register('phone')}
+                      className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded text-white font-['Inter'] focus:outline-none focus:border-[#C5A059] focus-visible:ring-2 focus-visible:ring-[#C5A059]/60 transition-colors placeholder:text-white/30"
                       placeholder="+7 (___) ___-__-__"
                     />
                     {errors.phone && (
-                      <p className="text-red-400 text-xs mt-1 font-['Inter']">{errors.phone.message}</p>
+                      <p role="alert" className="text-red-400 text-xs mt-1 font-['Inter']">{errors.phone.message}</p>
                     )}
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-white/90 font-['Inter'] text-sm mb-2 drop-shadow">
+                  <label htmlFor="lead-email" className="block text-white/90 font-['Inter'] text-sm mb-2 drop-shadow">
                     Email
                   </label>
                   <input
-                    {...register('email')}
+                    id="lead-email"
                     type="email"
-                    className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded text-white font-['Inter'] focus:outline-none focus:border-[#C5A059] transition-colors placeholder:text-white/30"
+                    inputMode="email"
+                    autoComplete="email"
+                    aria-invalid={!!errors.email}
+                    {...register('email')}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded text-white font-['Inter'] focus:outline-none focus:border-[#C5A059] focus-visible:ring-2 focus-visible:ring-[#C5A059]/60 transition-colors placeholder:text-white/30"
                     placeholder="ivan@example.com"
                   />
                   {errors.email && (
-                    <p className="text-red-400 text-xs mt-1 font-['Inter']">{errors.email.message}</p>
+                    <p role="alert" className="text-red-400 text-xs mt-1 font-['Inter']">{errors.email.message}</p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-white/90 font-['Inter'] text-sm mb-2 drop-shadow">
+                  <label htmlFor="lead-message" className="block text-white/90 font-['Inter'] text-sm mb-2 drop-shadow">
                     Опишите ваш вопрос *
                   </label>
                   <textarea
-                    {...register('message')}
+                    id="lead-message"
                     rows={4}
-                    className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded text-white font-['Inter'] focus:outline-none focus:border-[#C5A059] transition-colors placeholder:text-white/30 resize-none"
+                    aria-invalid={!!errors.message}
+                    {...register('message')}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded text-white font-['Inter'] focus:outline-none focus:border-[#C5A059] focus-visible:ring-2 focus-visible:ring-[#C5A059]/60 transition-colors placeholder:text-white/30 resize-none"
                     placeholder="Расскажите о вашей ситуации..."
                   />
                   {errors.message && (
-                    <p className="text-red-400 text-xs mt-1 font-['Inter']">{errors.message.message}</p>
+                    <p role="alert" className="text-red-400 text-xs mt-1 font-['Inter']">{errors.message.message}</p>
                   )}
                 </div>
 
-                <div className="flex items-start gap-3">
+                <label className="flex items-start gap-3 min-h-[44px] cursor-pointer">
                   <input
                     {...register('consent')}
                     type="checkbox"
-                    id="consent"
-                    className="mt-1 w-4 h-4 rounded border-white/20 bg-transparent text-[#C5A059] focus:ring-[#C5A059] focus:ring-offset-0 cursor-pointer"
+                    aria-invalid={!!errors.consent}
+                    className="mt-1 w-5 h-5 shrink-0 rounded border-white/20 bg-transparent text-[#C5A059] focus:ring-[#C5A059] focus:ring-offset-0 cursor-pointer"
                   />
-                  <label htmlFor="consent" className="text-white/90 font-['Inter'] text-xs leading-relaxed cursor-pointer drop-shadow">
+                  <span className="text-white/90 font-['Inter'] text-xs leading-relaxed drop-shadow">
                     Я согласен на обработку персональных данных в соответствии с{' '}
-                    <a href="#" className="text-[#C5A059] hover:underline">
+                    <a
+                      href="#"
+                      onClick={(event) => event.stopPropagation()}
+                      className="text-[#C5A059] hover:underline"
+                    >
                       Политикой конфиденциальности
                     </a>
-                  </label>
-                </div>
+                  </span>
+                </label>
                 {errors.consent && (
-                  <p className="text-red-400 text-xs font-['Inter']">{errors.consent.message}</p>
+                  <p role="alert" className="text-red-400 text-xs font-['Inter']">{errors.consent.message}</p>
+                )}
+
+                {status === 'error' && (
+                  <p role="alert" className="text-red-400 text-sm font-['Inter']">
+                    Не удалось отправить заявку. Позвоните нам:{' '}
+                    <a href="tel:+78352222341" className="underline hover:text-red-300">
+                      +7 (8352) 222-341
+                    </a>
+                  </p>
                 )}
 
                 <motion.button
                   type="submit"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full px-8 py-4 bg-[#C5A059] text-[#0F172A] font-['Inter'] font-semibold rounded hover:bg-[#D4B06A] transition-colors duration-300 flex items-center justify-center gap-2"
+                  disabled={status === 'sending'}
+                  whileHover={status === 'sending' ? undefined : { scale: 1.02 }}
+                  whileTap={status === 'sending' ? undefined : { scale: 0.98 }}
+                  className="w-full min-h-[48px] px-8 py-4 bg-[#C5A059] text-[#0F172A] font-['Inter'] font-semibold rounded hover:bg-[#D4B06A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A059] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A] transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   <Send className="w-5 h-5" />
-                  Отправить заявку
+                  {status === 'sending' ? 'Отправляем…' : 'Отправить заявку'}
                 </motion.button>
               </form>
             )}

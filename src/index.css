@@ -1,1 +1,31 @@
 @import "tailwindcss";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Не прятать секции под фиксированной шапкой при переходе по якорям */
+    scroll-padding-top: 6rem;
+  }
+
+  /* Видимый индикатор фокуса для клавиатурной навигации */
+  :focus-visible {
+    outline: 2px solid #c5a059;
+    outline-offset: 2px;
+  }
+
+  /* Уважаем системную настройку «уменьшить движение» */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

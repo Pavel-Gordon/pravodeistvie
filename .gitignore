@@ -14,3 +14,9 @@ build/
 
 # Browser test artifacts
 .playwright-cli/
+
+# Local env / secrets (шаблон .env.example остаётся в репозитории)
+.env
+.env.local
+.env.*.local
+!.env.example

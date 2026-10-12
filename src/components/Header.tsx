@@ -22,6 +22,24 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Блокировка скролла фона и закрытие меню по Escape, пока меню открыто
+  useEffect(() => {
+    if (!isMobileOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsMobileOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isMobileOpen]);
+
   return (
     <>
       <motion.header
@@ -80,8 +98,10 @@ export default function Header() {
 
             <motion.button
               onClick={() => setIsMobileOpen(!isMobileOpen)}
-              className="lg:hidden text-white p-3"
+              className="lg:hidden text-white p-3 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A059]"
               aria-label={isMobileOpen ? 'Закрыть меню' : 'Открыть меню'}
+              aria-expanded={isMobileOpen}
+              aria-controls="mobile-menu"
             >
               <AnimatePresence mode="wait">
                 {isMobileOpen ? (
@@ -110,14 +130,15 @@ export default function Header() {
               onClick={() => setIsMobileOpen(false)}
             />
             <motion.div
+              id="mobile-menu"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ duration: 0.4 }}
-              className="fixed top-0 right-0 bottom-0 w-full max-w-sm bg-[#0F172A] z-40 lg:hidden border-l border-[#C5A059]/10"
+              className="fixed top-0 right-0 bottom-0 w-full max-w-sm bg-[#0F172A] z-40 lg:hidden border-l border-[#C5A059]/10 flex flex-col"
             >
-              <div className="flex flex-col h-full pt-24 pb-8 px-8">
-                <nav className="space-y-1 mb-10">
+              <div className="flex flex-col h-full pt-24 pb-8 px-8 overflow-y-auto">
+                <nav className="space-y-1">
                   {navLinks.map((link, index) => (
                     <motion.a
                       key={link.href}
@@ -132,6 +153,23 @@ export default function Header() {
                     </motion.a>
                   ))}
                 </nav>
+
+                <div className="mt-auto pt-10 space-y-3">
+                  <a
+                    href="tel:+78352222341"
+                    className="flex items-center justify-center gap-2 min-h-[48px] rounded bg-[#C5A059] text-[#0F172A] font-['Inter'] font-semibold"
+                  >
+                    <Phone className="w-5 h-5" />
+                    +7 (8352) 222-341
+                  </a>
+                  <a
+                    href="#contact"
+                    onClick={() => setIsMobileOpen(false)}
+                    className="flex items-center justify-center gap-2 min-h-[48px] rounded border border-[#C5A059]/40 text-[#C5A059] font-['Inter'] font-semibold"
+                  >
+                    Оставить заявку
+                  </a>
+                </div>
               </div>
             </motion.div>
           </>
