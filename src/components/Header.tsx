@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Phone, Scale } from 'lucide-react';
+import { Menu, X, Phone } from 'lucide-react';
 
 const navLinks = [
   { label: 'Главная', href: '#' },
@@ -56,18 +56,17 @@ export default function Header() {
           <div className="flex items-center justify-between h-20 lg:h-24">
             <motion.a
               href="#"
-              className="flex items-center gap-3 group"
+              className="flex items-center group"
               whileHover={{ scale: 1.02 }}
+              aria-label="ПравоДействие — на главную"
             >
-              <Scale className="w-8 h-8 text-[#C5A059]" />
-              <div className="flex flex-col">
-                <span className="font-['Playfair_Display'] text-lg lg:text-xl font-bold text-white tracking-[0.15em]">
-                  ПРАВОДЕЙСТВИЕ
-                </span>
-                <span className="hidden lg:block text-[10px] text-[#C5A059]/70 tracking-[0.25em] uppercase font-['Inter'] mt-0.5">
-                  Юридическая фирма
-                </span>
-              </div>
+              <img
+                src={`${import.meta.env.BASE_URL}images/logo.png`}
+                alt="ПравоДействие"
+                className="h-10 lg:h-12 w-auto"
+                width={256}
+                height={133}
+              />
             </motion.a>
 
             <nav className="hidden lg:flex items-center gap-12">

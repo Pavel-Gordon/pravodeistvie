@@ -1,6 +1,6 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Scale, Phone, Mail, MapPin, ArrowUpRight } from 'lucide-react';
+import { Phone, Mail, MapPin, ArrowUpRight } from 'lucide-react';
 import { contacts } from '../data/siteData';
 
 const quickLinks = [
@@ -76,11 +76,14 @@ export default function Footer() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="sm:col-span-2 lg:col-span-1"
           >
-            <a href="#" className="flex items-center gap-3 mb-6 group">
-              <Scale className="w-7 h-7 text-[#C5A059] transition-transform duration-300 group-hover:scale-110" />
-              <span className="font-['Playfair_Display'] text-lg font-bold text-white tracking-[0.12em]">
-                ПРАВОДЕЙСТВИЕ
-              </span>
+            <a href="#" className="inline-block mb-6 group" aria-label="ПравоДействие — на главную">
+              <img
+                src={`${import.meta.env.BASE_URL}images/logo.png`}
+                alt="ПравоДействие"
+                className="h-12 w-auto transition-transform duration-300 group-hover:scale-105"
+                width={256}
+                height={133}
+              />
             </a>
             <p className="text-white/50 font-['Inter'] text-sm leading-relaxed mb-6 max-w-xs">
               Премиальная юридическая фирма полного цикла. Защищаем интересы
