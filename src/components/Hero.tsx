@@ -3,26 +3,23 @@ import { ArrowRight } from 'lucide-react';
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[100svh] flex items-center overflow-hidden">
-      {/* CSS-градиент фон */}
-      <div className="absolute inset-0 z-0">
-        {/* Базовый градиент */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-[#0F172A] to-slate-900"></div>
-        
-        {/* Золотистое свечение справа */}
-        <div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-[#C5A059]/10 via-transparent to-transparent"></div>
-        
-        {/* Тонкие радиальные градиенты для глубины */}
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 20% 30%, rgba(197, 160, 89, 0.08) 0%, transparent 40%),
-                            radial-gradient(circle at 80% 70%, rgba(197, 160, 89, 0.05) 0%, transparent 50%),
-                            radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.4) 0%, transparent 70%)`
-        }}></div>
-        
-        {/* Декоративные круги */}
-        <div className="absolute top-20 right-20 w-96 h-96 border border-[#C5A059]/10 rounded-full"></div>
-        <div className="absolute top-32 right-32 w-72 h-72 border border-[#C5A059]/5 rounded-full"></div>
-      </div>
+    <section className="relative min-h-[100svh] flex items-center overflow-hidden bg-[#0F172A]">
+      {/* Фоновое фото: Chicago Board of Trade, Chicago Architecture Today, CC BY 2.0 */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${import.meta.env.BASE_URL}images/hero-bg.jpg)` }}
+        aria-hidden="true"
+      />
+
+      {/* Затемняющий слой: слева плотный под текст, справа светлее */}
+      <div
+        className="absolute inset-0 bg-gradient-to-r from-[#0F172A] via-[#0F172A]/85 to-[#0F172A]/55"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-[#0F172A]/50"
+        aria-hidden="true"
+      />
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-12 py-32 lg:py-0 w-full" style={{ zIndex: 10 }}>
         <div className="max-w-3xl">
@@ -53,7 +50,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="font-['Inter'] text-lg lg:text-xl text-white/60 leading-relaxed mb-12 max-w-2xl font-light"
+            className="font-['Inter'] text-lg lg:text-xl text-white/75 leading-relaxed mb-12 max-w-2xl font-light"
           >
             Комплексные юридические решения для бизнеса и частных лиц
             в Чебоксарах и по всей России. Опыт с 2007 года.
