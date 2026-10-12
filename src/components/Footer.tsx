@@ -8,6 +8,7 @@ const quickLinks = [
   { label: 'О фирме', href: '#about' },
   { label: 'Услуги', href: '#services' },
   { label: 'Цены', href: '#pricing' },
+  { label: 'Документы', href: '#documents' },
   { label: 'Команда', href: '#team' },
   { label: 'Контакты', href: '#contact' },
 ];
@@ -38,10 +39,9 @@ const specializations = [
 
 const publications = [
   { label: 'Блог юриста', href: '#blog' },
-  { label: 'Образцы документов', href: '#downloads' },
+  { label: 'Документы', href: '#documents' },
   { label: 'Глоссарий', href: '#glossary' },
-  { label: 'Прайс-лист (PDF)', href: 'http://xn--80aeahfbug6bhlsn.xn--p1ai/doc/price/prajs-list-na-uslugi-yurista-cheboksary-firmy-pravodejstvie.pdf' },
-  { label: 'Прайс-лист (Word)', href: 'http://xn--80aeahfbug6bhlsn.xn--p1ai/doc/price/prajs-list-na-uslugi-yurista-cheboksary-firmy-pravodejstvie.doc' },
+  { label: 'Прайс-лист (PDF)', href: `${import.meta.env.BASE_URL}documents/price-lists/price-list-legal-services.pdf` },
 ];
 
 const legalLinks = [

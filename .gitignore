@@ -11,3 +11,6 @@ build/
 .vite/
 .idea/
 .vscode/
+
+# Browser test artifacts
+.playwright-cli/

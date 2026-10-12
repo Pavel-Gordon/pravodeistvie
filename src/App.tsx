@@ -4,7 +4,7 @@ import About from './components/About';
 import ServicesPage from './components/ServicesPage';
 import Specializations from './components/Specializations';
 import PricingPage from './components/PricingPage';
-import DownloadsPage from './components/DownloadsPage';
+import DocumentsPage from './components/DocumentsPage';
 import Team from './components/Team';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
@@ -20,7 +20,7 @@ export default function App() {
         <ServicesPage />
         <Specializations />
         <PricingPage />
-        <DownloadsPage />
+        <DocumentsPage />
         <Team />
         <Testimonials />
         <Contact />
