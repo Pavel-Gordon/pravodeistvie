@@ -63,7 +63,7 @@ export default function Contact() {
         routes: 'Маршрутки: 22, 35, 101с; Автобусы: 52; Троллейбусы: 1, 21',
       },
       location: 'Московский район (Северо-западный район (СЗР)), микрорайон "Волжский-3"',
-      image: 'https://image.qwenlm.ai/generated-images/71ccaf02-c606-4334-87b3-47d83cfdae19/_result.png',
+      image: `${import.meta.env.BASE_URL}images/offices/fasad-zdania.jpg`,
     },
     {
       title: 'Дополнительный офис',
@@ -81,7 +81,7 @@ export default function Contact() {
         routes: 'Маршрутки: 7, 12, 26, 37, 45, 101с, 331, 333; Автобусы: 42, 52; Троллейбусы: 3, 18',
       },
       location: 'Калининский район (В районе ХБК / Мега Молл), деловой центр на Текстильщиках',
-      image: 'https://image.qwenlm.ai/generated-images/721de880-f658-40fb-80d1-88d7366df1f2/_result.png',
+      image: `${import.meta.env.BASE_URL}images/offices/fasad-zdania2.jpg`,
     },
   ];
 

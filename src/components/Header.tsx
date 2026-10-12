@@ -56,17 +56,21 @@ export default function Header() {
           <div className="flex items-center justify-between h-20 lg:h-24">
             <motion.a
               href="#"
-              className="flex items-center group"
+              className="inline-flex items-center group"
               whileHover={{ scale: 1.02 }}
               aria-label="ПравоДействие — на главную"
             >
-              <img
-                src={`${import.meta.env.BASE_URL}images/logo.png`}
-                alt="ПравоДействие"
-                className="h-10 lg:h-12 w-auto"
-                width={256}
-                height={133}
-              />
+              {/* Родной цветной логотип рассчитан на светлый фон — на тёмной шапке
+                  размещаем его на белой подложке, иначе надпись не читается */}
+              <span className="inline-flex items-center rounded-lg bg-white px-3 py-2 shadow-md shadow-black/20">
+                <img
+                  src={`${import.meta.env.BASE_URL}images/logo.png`}
+                  alt="ПравоДействие"
+                  className="h-8 lg:h-9 w-auto"
+                  width={256}
+                  height={133}
+                />
+              </span>
             </motion.a>
 
             <nav className="hidden lg:flex items-center gap-12">

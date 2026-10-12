@@ -76,14 +76,16 @@ export default function Footer() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="sm:col-span-2 lg:col-span-1"
           >
-            <a href="#" className="inline-block mb-6 group" aria-label="ПравоДействие — на главную">
-              <img
-                src={`${import.meta.env.BASE_URL}images/logo.png`}
-                alt="ПравоДействие"
-                className="h-12 w-auto transition-transform duration-300 group-hover:scale-105"
-                width={256}
-                height={133}
-              />
+            <a href="#" className="inline-flex items-center mb-6 group" aria-label="ПравоДействие — на главную">
+              <span className="inline-flex items-center rounded-lg bg-white px-3.5 py-2.5 shadow-md shadow-black/30 transition-transform duration-300 group-hover:scale-105">
+                <img
+                  src={`${import.meta.env.BASE_URL}images/logo.png`}
+                  alt="ПравоДействие"
+                  className="h-9 w-auto"
+                  width={256}
+                  height={133}
+                />
+              </span>
             </a>
             <p className="text-white/50 font-['Inter'] text-sm leading-relaxed mb-6 max-w-xs">
               Премиальная юридическая фирма полного цикла. Защищаем интересы
